@@ -1,0 +1,30 @@
+// import { defineConfig } from "tsup";
+
+// export default defineConfig({
+//   entry: ["src/index.js"],
+//   outDir: "dist",
+//   format: ["esm", "cjs"],
+//   dts: true,
+//   clean: true,
+//   bundle: true, // bundle dependencies into single file
+//   splitting: false, // no code splitting (no chunks)
+// });
+
+import { defineConfig } from "tsup";
+
+export default defineConfig({
+  entry: ["src/index.js"], // keep this if it's the main entry
+  outDir: "dist",
+  format: ["esm", "cjs"], // export both for compatibility
+  dts: true,
+  clean: true,
+  bundle: false,
+  sourcemap: true,
+  splitting: false,
+  external: ["react", "react-dom", "react-hook-form"],
+  jsx: "preserve", // ✅ leave JSX for Next.js to compile
+  loader: {
+    ".js": "jsx", // ✅ needed for JSX in .js files (if any remain)
+    ".jsx": "jsx", // ✅ needed for JSX in .jsx files
+  },
+});

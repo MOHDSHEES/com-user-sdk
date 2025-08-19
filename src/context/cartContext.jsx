@@ -45,6 +45,10 @@ export const CartProvider = ({ children }) => {
     setCart((prev) => prev.filter((p) => p.id !== cart_id));
     // setPagination((prev) => ({ ...prev, total: Math.max(prev.total - 1, 0) }));
   };
+  const emptyCartContext = () => {
+    setCart([]);
+    // setPagination((prev) => ({ ...prev, total: Math.max(prev.total - 1, 0) }));
+  };
 
   return (
     <CartContext.Provider
@@ -56,6 +60,7 @@ export const CartProvider = ({ children }) => {
         deleteProductInCartContext,
         editProductInCartContext,
         updateQuantityInCartContext,
+        emptyCartContext,
         fetchCart,
       }}
     >

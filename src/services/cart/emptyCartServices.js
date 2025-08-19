@@ -1,17 +1,18 @@
 // src/services/productServices.js
 import { BASE_URL } from "../../../env";
-export const getCartItemsServices = async ({ userId }) => {
-  //   console.log(userId);
+export const emptyCartServices = async ({ user_id }) => {
+  // console.log(productId);
+  //   console.log("in");
 
   try {
-    if (!userId) {
-      return { error: "User ID is required" };
+    if (!user_id) {
+      return { error: " cart ID is required" };
     }
-    const res = await fetch(`${BASE_URL}/api/cart/getCartItems`, {
-      method: "POST",
+    const res = await fetch(`${BASE_URL}/api/cart/emptyCart`, {
+      method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        user_id: userId,
+        user_id: user_id,
       }),
     });
     // console.log(res);

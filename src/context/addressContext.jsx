@@ -30,11 +30,15 @@ export const AddressProvider = ({ children }) => {
   const addAddressInContext = (newAddress) => {
     setAddress((prev) => [newAddress, ...prev]);
   };
-  // const editProductInCartContext = (updatedProduct) => {
-  //   setCart((prev) =>
-  //     prev.map((p) => (p.id === updatedProduct.id ? updatedProduct : p))
-  //   );
-  // };
+  const deleteAddressInContext = (addressId) => {
+    setAddress((prev) => prev.filter((p) => p.id !== addressId));
+    // setPagination((prev) => ({ ...prev, total: Math.max(prev.total - 1, 0) }));
+  };
+  const editAddressInContext = (updatedAddress) => {
+    setAddress((prev) =>
+      prev.map((p) => (p.id === updatedAddress.id ? updatedAddress : p))
+    );
+  };
 
   return (
     <AddressContext.Provider
@@ -44,6 +48,8 @@ export const AddressProvider = ({ children }) => {
         error,
         fetchAddress,
         addAddressInContext,
+        deleteAddressInContext,
+        editAddressInContext,
       }}
     >
       {children}

@@ -1,7 +1,7 @@
 // src/sdk/hooks/useCartActions.js
 "use client";
 
-import { useCartContext } from "../../context"; // adjust import path as needed
+import { useCartContext, useUserContext } from "../../context"; // adjust import path as needed
 import { addToCartServices } from "../../services/cart/addToCartServices";
 import { removeFromCartServices } from "../../services/cart/removeFromCartServices";
 import { updateCartServices } from "../../services/cart/updateCartItemServices";
@@ -9,11 +9,19 @@ import { emptyCartServices } from "../../services/cart/emptyCartServices";
 
 export const useCartActions = () => {
   const {
-    fetchCart,
+    fetchCart: fetch,
     deleteProductInCartContext,
     updateQuantityInCartContext,
     emptyCartContext,
   } = useCartContext();
+  // const { user } = useUserContext();
+  const fetchCart = async ({ userId }) => {
+    // console.log(user);
+
+    if (!userId) throw new Error("User Id is required");
+    // console.log(user);
+    await fetch({ userId });
+  };
 
   const addToCart = async ({ userId, productId, qty, variationIds }) => {
     const { data, error } = await addToCartServices({
@@ -80,5 +88,6 @@ export const useCartActions = () => {
     removeFromCart,
     updateQuantity,
     emptyCart,
+    fetchCart,
   };
 };

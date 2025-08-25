@@ -11,6 +11,8 @@ export const CartProvider = ({ children }) => {
   const [error, setError] = useState(null);
 
   const fetchCart = useCallback(async ({ userId }) => {
+    // console.log(user);
+
     setLoading(true);
     // console.log("in");
 

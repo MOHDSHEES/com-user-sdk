@@ -1,10 +1,10 @@
 // src/sdk/hooks/useCartActions.js
 "use client";
 
-import { set } from "react-hook-form";
 import { addUserServices } from "../../services/user/addUserServices";
 import { getUserByEmaillServices } from "../../services/user/getUserByEmailServices";
 import { useUserContext } from "../../context";
+import { editUser } from "./editUser";
 
 export const useUserActions = () => {
   const { addUser: addUserInContext, setLoading } = useUserContext();
@@ -19,6 +19,19 @@ export const useUserActions = () => {
     addUserInContext(data.user);
 
     return data.user;
+  };
+
+  const editUserAction = async ({ userId, updated_user }) => {
+    const { data, error } = await editUser({
+      userId,
+      updated_user,
+    });
+    if (error) throw new Error(error);
+    // console.log(data);
+
+    addUserInContext(data.user);
+
+    return { data: data.user };
   };
 
   const getUserByEmail = async ({ email }) => {
@@ -37,5 +50,6 @@ export const useUserActions = () => {
   return {
     addUser,
     getUserByEmail,
+    editUser: editUserAction,
   };
 };

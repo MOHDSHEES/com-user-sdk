@@ -6,6 +6,7 @@ export { getUserByEmail } from "./getUserByEmail";
 export { useUserActions } from "./useUserActions";
 export { deleteAddress } from "./deleteAddress";
 export { editAddress } from "./editAddress";
+export { editUser } from "./editUser";
 // export { CartProvider, useCartContext } from "../../context/cartContext";
 // export {
 //   ProductsProvider,

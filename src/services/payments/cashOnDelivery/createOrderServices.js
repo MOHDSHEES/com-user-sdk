@@ -12,7 +12,7 @@ export const createOrderServices = async ({
   //   console.log(user_id);
 
   try {
-    const res = await fetch(`${BASE_URL}/api/razorpay/createOrder`, {
+    const res = await fetch(`${BASE_URL}/api/cod/createOrder`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

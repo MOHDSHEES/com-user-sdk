@@ -1,5 +1,6 @@
 // src/sdk/payments/processOrderPayment.js
 // import { createOrderServices } from "../../../services/payments/razorpay/createOrderServices";
+import { addOrderItems } from "../../orders";
 import { createOrder } from "./createOrder";
 import { openRazorpayCheckout } from "./openRazorpay";
 import { verifyPayment } from "./verifyPayment";
@@ -22,6 +23,7 @@ export const processOrderPayment = async ({
   billing_address,
   key_id,
   shipping_address,
+  order_items,
   onSuccess,
   onFailure,
 }) => {
@@ -36,7 +38,7 @@ export const processOrderPayment = async ({
     });
     if (error) throw new Error(error);
     // console.log(data);
-
+    await addOrderItems({ order_id: data.dbOrder.order_id, order_items });
     // 2️⃣ Call your existing openRazorpayCheckout function
     await openRazorpayCheckout(
       data.order,

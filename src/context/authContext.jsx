@@ -5,6 +5,7 @@ import {
   signInEmailPassword,
   signOut,
   signUpEmailPassword,
+  verifyOtp as verfyOtp,
   //   supabaseClient as importedClient,
 } from "../auth/supabase";
 
@@ -75,6 +76,22 @@ export const AuthProvider = ({ children }) => {
     return response;
   };
 
+  const verifyOtp = async ({ email, otp }) => {
+    // console.log(url);
+
+    const response = await verfyOtp({ email, otp });
+    // console.log(response);
+
+    if (response?.data?.user) setAuthentication(response.data.user);
+    return response;
+  };
+  //   const loginMagicLink = async ({ email, redirectTo }) => {
+  //     const response = await signInMagicLink({ email, redirectTo });
+  //     // console.log(response);
+  //     if (response?.data?.user) setAuthentication(response.data.user);
+  //     return response;
+  //   };
+
   // Context-aware signout
   const logout = async () => {
     const response = await signOut();
@@ -89,6 +106,8 @@ export const AuthProvider = ({ children }) => {
         // user,
         authentication,
         fetchAuthentication,
+        verifyOtp,
+        // loginMagicLink,
         loading,
         signup,
         login,

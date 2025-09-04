@@ -35,12 +35,15 @@ export const useUserActions = () => {
   };
 
   const getUserByEmail = async ({ email }) => {
+    // console.log(email);
+
     setLoading(true);
     const { data, error } = await getUserByEmaillServices({
       email,
     });
     if (error) throw new Error(error);
     // console.log(data);
+    // console.log(email);
 
     addUserInContext({ user: data });
     setLoading(false);

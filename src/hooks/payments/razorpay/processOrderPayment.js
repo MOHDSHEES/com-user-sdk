@@ -49,12 +49,16 @@ export const processOrderPayment = async ({
           //   const verification = await verifyPayment(response);
           onSuccess?.(response);
         } catch (err) {
+          console.log(err);
+
           onFailure?.(err);
         }
       },
       onFailure
     );
   } catch (err) {
+    console.log(err);
+
     onFailure?.(err);
   }
 };

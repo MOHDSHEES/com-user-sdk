@@ -18,6 +18,36 @@ export async function signUpEmailPassword(
     options: { data: metadata, emailRedirectTo: redirectTo },
   });
 }
+export async function signUpWithOtp({ email, metadata = {}, redirectTo }) {
+  //   console.log(email);
+
+  if (!supabaseClient) throw new Error("Supabase client not initialized");
+
+  return supabaseClient.auth.signInWithOtp({
+    email,
+    options: {
+      data: metadata, // goes into user.user_metadata
+      //   emailRedirectTo: redirectTo,
+    },
+  });
+}
+export async function signInWithOtp({ email }) {
+  if (!supabaseClient) throw new Error("Supabase client not initialized");
+
+  return supabaseClient.auth.signInWithOtp({
+    email,
+  });
+}
+
+export async function verifyOtp({ email, otp }) {
+  if (!supabaseClient) throw new Error("Supabase client not initialized");
+
+  return supabaseClient.auth.verifyOtp({
+    email: email,
+    token: otp,
+    type: "email",
+  });
+}
 
 export async function signInEmailPassword(email, password) {
   if (!supabaseClient) throw new Error("Supabase client not initialized");

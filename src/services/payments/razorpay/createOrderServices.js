@@ -23,16 +23,19 @@ export const createOrderServices = async ({
         shipping_address,
       }),
     });
+    console.log(res);
+
     if (!res.ok) {
       const error = await res.json();
+      console.log(error);
       return { error: error.message };
     }
     const data = await res.json();
-    // console.log(data);
+    console.log(data);
 
     return { data: data };
   } catch (err) {
-    // console.log(err);
+    console.log(err);
 
     return { error: err || "Network/server error" };
   }

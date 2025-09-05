@@ -1,18 +1,23 @@
 // src/services/productServices.js
 import { BASE_URL } from "../../../env";
-export const addOrderItemsServices = async ({ order_id, order_items } = {}) => {
-  //   console.log(userId);
+export const updateOrderStatusServices = async ({
+  order_id,
+  status,
+  payment_status,
+} = {}) => {
+  //   console.log(order_id);
 
   try {
     if (!order_id) {
       return { error: "Order ID is required" };
     }
-    const res = await fetch(`${BASE_URL}/api/order/addOrderItems`, {
+    const res = await fetch(`${BASE_URL}/api/order/updateOrderStatus`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         order_id,
-        order_items,
+        status,
+        payment_status,
       }),
     });
     // console.log(res);

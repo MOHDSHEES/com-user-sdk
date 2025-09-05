@@ -1,16 +1,16 @@
 // src/server/products/getProductById.ts
 
-import { getUserByEmailServices } from "../../services/user/getUserByEmailServices";
+import { getUserByEmaillServices } from "../../services/user/getUserByEmailServices";
 
 // import { getAddressServices } from "../../services/user/getAddressServices";
 
 // import { getProductsServices } from "../../services/products/getProductsServices";
 
 export const getUserByEmail = async ({ email }) => {
-  if (!emaill) {
+  if (!email) {
     throw new Error("Email ID is required");
   }
-  const { data, error } = await getUserByEmailServices({ emaill });
+  const { data, error } = await getUserByEmaillServices({ email });
   //   console.log(data);
 
   if (error) {

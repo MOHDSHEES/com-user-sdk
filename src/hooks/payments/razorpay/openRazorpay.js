@@ -1,3 +1,4 @@
+import { updateOrderStatusServices } from "../../../services/orders/updateOrderStatusServices";
 import { verifyPayment } from "./verifyPayment";
 
 function loadRazorpayScript() {
@@ -42,14 +43,50 @@ export async function openRazorpayCheckout(
 
         const verifyRes = await verifyPayment(response);
         if (verifyRes.success) onSuccess?.(verifyRes);
-        else onFailure?.(verifyRes);
+        else {
+          await updateOrderStatusServices({
+            order_id: order.id,
+            payment_status: "failed",
+            // status: "payment_failed",
+          });
+          onFailure?.(verifyRes);
+        }
       } catch (err) {
+        await updateOrderStatusServices({
+          order_id: order.id,
+          payment_status: "failed",
+          // status: "payment_failed",
+        });
         onFailure?.(err);
       }
+    },
+    modal: {
+      ondismiss: async () => {
+        await updateOrderStatusServices({
+          order_id: order.id,
+          payment_status: "failed",
+          // status: "payment_failed",
+        });
+        console.log("⚠️ Payment popup closed by user");
+        onFailure?.({ success: false, message: "Payment cancelled by user" });
+      },
     },
     theme: { color: "#000000" },
   };
 
   const razorpay = new window.Razorpay(options);
+  razorpay.on("payment.failed", async function (response) {
+    console.log("❌ Payment Failed:", response.error);
+    await updateOrderStatusServices({
+      order_id: order.id,
+      payment_status: "failed",
+      // status: "payment_failed",
+    });
+    onFailure?.({
+      success: false,
+      message: response.error?.description || "Payment failed",
+      error: response.error,
+    });
+  });
   razorpay.open();
 }
